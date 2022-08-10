@@ -1,24 +1,13 @@
-const Sequelize = require('sequelize');
-const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/wizard_news_seq_2208_db');
 const express = require('express');
 const app = express();
+/*
+const db = require('./db');
+const conn = db.conn;
+const User = db.User;
+const Post = db.Post;
+*/
+const { conn, User, Post } = require('./db');
 
-const User = conn.define('user', {
-  name: {
-    type: Sequelize.STRING
-  }
-});
-const Post = conn.define('post', {
-  title: {
-    type: Sequelize.STRING
-  },
-  content: {
-    type: Sequelize.TEXT
-  }
-});
-
-Post.belongsTo(User);
-User.hasMany(Post);
 
 app.use('/assets', express.static('assets'));
 app.use(express.urlencoded({ extended: false }));
